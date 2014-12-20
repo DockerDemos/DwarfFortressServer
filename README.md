@@ -21,7 +21,7 @@ Run the container:
 
     sudo docker run -d -p 80:6080 dwarffortress
 
-To Play Dwarf Fortress in your browser (requires HTML5 support), visit http://\<IP ADDRESS OF YOUR HOST\>/, and click "Connect".  No password is required.
+To Play Dwarf Fortress in your browser (requires HTML5 support), visit http://\<ip address or hostname of your host\>/, and click "Connect".  No password is required.
 
 
 _Note:_ Check your browser's HTML5 Websocket support: [http://caniuse.com/#search=web%20sockets](http://caniuse.com/#search=web%20sockets)
