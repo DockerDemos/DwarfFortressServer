@@ -1,7 +1,7 @@
 DwarfFortress "Server"
 ======================
 
-_v0.1 - 20141219_
+_v0.1 - 20150207_
 
 Play [Dwarf Fortress](http://www.bay12games.com/dwarves/) in your browser with Docker and NoVNC!
 
@@ -46,7 +46,7 @@ _Note:_ Check your browser's HTML5 Websocket support: [http://caniuse.com/#searc
 
 The Dockerfile and related code, scripts or documentation in this repository is:
 
-Copyright (C) 2014 Chris Collins
+Copyright (C) 2014-15 Chris Collins
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
