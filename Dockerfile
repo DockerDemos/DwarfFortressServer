@@ -3,7 +3,7 @@ MAINTAINER Chris Collins <collins.christopher@gmail.com>
 
 ENV PKGS git x11vnc wget python python-numpy unzip Xvfb openbox curl tar bzip2
 ENV NOVNC https://github.com/kanaka/noVNC.git
-ENV DF http://www.bay12games.com/dwarves/df_40_20_linux.tar.bz2
+ENV DF http://www.bay12games.com/dwarves/df_40_24_linux.tar.bz2
 
 ENV DFPKGS libgtk2.0-0:i386 libglu1-mesa:i386 libsdl-image1.2:i386 libsdl-sound1.2:i386 libsdl-ttf2.0-0:i386 libopenal1:i386
 
