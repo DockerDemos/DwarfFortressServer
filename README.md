@@ -1,7 +1,7 @@
 DwarfFortress "Server"
 ======================
 
-_v0.1 - 20150207_
+_v1.0 - 20150209_
 
 Play [Dwarf Fortress](http://www.bay12games.com/dwarves/) in your browser with Docker and NoVNC!
 
@@ -28,9 +28,7 @@ _Note:_ Check your browser's HTML5 Websocket support: [http://caniuse.com/#searc
 
 ### Known Issues ###
 
-* No current mechanism for saving your data when you stop the Docker container
-* Unable to reconnect to NoVNC session after disconnecting
-* NoVNC config needs some work to improve stability
+Tracked on Github: [https://github.com/DockerDemos/DwarfFortressServer/issues](https://github.com/DockerDemos/DwarfFortressServer/issues)
 
 ### Acknowledgments ###
 
@@ -40,7 +38,7 @@ _Note:_ Check your browser's HTML5 Websocket support: [http://caniuse.com/#searc
 
 ### Copyright Info ###
 
-[Dwarf Fortress](http://www.bay12games.com/dwarves/) is Copyright (C) 2002-2014, Tarn Adams.
+[Dwarf Fortress](http://www.bay12games.com/dwarves/) is Copyright (C) 2002-2015, Tarn Adams.
 
 [NoVNC team](https://kanaka.github.io/noVNC/) is licensed under the MPL-2.0.
 
