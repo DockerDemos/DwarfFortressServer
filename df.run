@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /df_linux
+exec ./df
