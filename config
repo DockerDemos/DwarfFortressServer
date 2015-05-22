@@ -1,0 +1,7 @@
+# Dwarf Fortress Server config file
+#
+# Change these values to suit your needs
+
+LOCAL_PORT='80'
+SAVE_DIR='/tmp/DFServer'
+IMAGENAME='dfs'

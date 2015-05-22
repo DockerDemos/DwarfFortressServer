@@ -1,7 +1,7 @@
 DwarfFortress "Server"
 ======================
 
-_v1.0 - 20150209_
+_Version: 2.0 - 20150209_
 
 Play [Dwarf Fortress](http://www.bay12games.com/dwarves/) in your browser with Docker and NoVNC!
 
@@ -11,15 +11,20 @@ Can you dig it?
 
 ### Building and Running ###
 
-Build the Image:
+The `runme` script will manage both building the image and running the container:
 
-1. `git clone https://github.com/DockerDemos/DwarfFortressServer.git`
-2. `sudo docker build -t dwarffortress .`
-
-Run the container:
-
-
-    sudo docker run -d -p 80:6080 dwarffortress
+    $ ./runme.sh --help
+    Usage: ./runme [OPTIIONS]
+    
+    Dwarf Fortress in a Docker container
+    
+    Options:
+      --rebuild-image	Rebuild the Docker image before running
+      --no-cache	Do not use Docker's image cache when building
+      --pull-latest	Pull the latest code from the Github; implies --rebuild-image
+      --no-persist	Don't mount a volume to save DwarfFortress data into
+      --help		Print this message
+      --version		Print the version info and exit
 
 To Play Dwarf Fortress in your browser (requires HTML5 support), visit http://\<ip address or hostname of your host\>/, and click "Connect".  No password is required.
 

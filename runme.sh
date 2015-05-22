@@ -1,0 +1,155 @@
+#!/bin/bash
+
+VERSION="$(awk '/Version:/ {print $2",",$4}' README.md |sed 's/_//g')"
+DATETIME=$(date +"%s")
+COLWIDTH="$(tput cols)"
+RIGHTCOL="$((COLWIDTH -30))"
+
+if [ -f ./config ] ; then
+  . ./config
+else
+  echo "No source config file found"
+  LOCAL_PORT='80'
+  SAVE_DIR='/tmp/DFServer'
+  IMAGENAME='dfserver'
+
+fi
+
+f_help () {
+  echo -e "Usage: ./runme [OPTIIONS]\n
+Dwarf Fortress in a Docker container\n
+Options:
+  --rebuild-image\tRebuild the Docker image before running
+  --no-cache\t\tDo not use Docker's image cache when building
+  --pull-latest\t\tPull the latest code from the Github; implies --rebuild-image
+  --no-persist\t\tDon't mount a volume to save DwarfFortress data into
+  --help\t\tPrint this message
+  --version\t\tPrint the version info and exit
+"
+}
+
+command_exists() {
+  command -v "$@" > /dev/null 2>&1
+}
+
+f_err () {
+  echo -e "$1"
+  exit 1
+}
+
+write_fail () {
+  printf "$1"
+  printf "%${RIGHTCOL}s\n" "[FAILED]"
+}
+
+write_no () {
+  printf "$1"
+  printf "%${RIGHTCOL}s\n" "[NO]"
+}
+
+write_pass () {
+  printf "$1"
+  printf "%${RIGHTCOL}s\n" "[OK]"
+}
+
+pull_latest () {
+  if ! command_exists git ; then
+    write_no "Checking for Git"
+    echo 'WARNING: Skipping "--pull-latest".  Git not installed or in $PATH'
+  elif ! $(git status > /dev/null 2>&1) ; then
+    write_no echo "Checking for Git Repo information"
+    echo 'WARNING: Skipping "--pull-latest".  Unable to find .git/config'
+  else
+    write_ok "Checking for Git"
+    write_ok "Checking for Git Repo information"
+    echo 'Pulling latest code from Github'
+    GIT=$(git pull 2>&1) || \
+    f_err "Unable to pull from repository\n\m ${GIT}"
+  fi
+}
+
+rebuild_image () {
+  IMAGE="$(sudo docker images ${IMAGENAME} |grep latest)"
+  if [[ ! -z $IMAGE ]] ; then
+    RMI=$(sudo docker rmi ${IMAGENAME}:latest 2>&1) || \
+    f_err "Unable to remove ${IMAGENAME}:latest tag\n\n ${RMI}"
+  fi
+    
+  if [[ ! -z $CACHE ]] ; then
+    echo 'Building image without Docker cache'
+  fi
+  echo "Building new image - ${IMAGENAME}:latest"
+  BUILD=$(sudo docker build $CACHE -t ${IMAGENAME}:${DATETIME} . 2>&1) || \
+    f_err "Unable to build image ${IMAGENAME}:${DATETIME}\n\n ${BUILD}"
+  TAG=$(sudo docker tag ${IMAGENAME}:${DATETIME} ${IMAGENAME}:latest 2>&1) || \
+    f_err "Unable to tag image ${IMAGENAME}:latest\n\n ${TAG}"
+}
+
+CACHE=''
+VOLMNT="-v ${SAVE_DIR}:/df_linux/data/save"
+
+while [[ $# > 0 ]] ; do
+  OPT="$1"
+case $OPT in
+  --rebuild-image)
+    REBUILD=true
+  shift
+  ;;
+  --no-cache)
+    CACHE='--no-cache'
+    REBUILD=true
+  shift
+  ;;
+  --pull-latest)
+    LATEST=true
+    REBUILD=true
+  shift
+  ;;
+  --no-persist)
+    VOLMNT=''
+  shift
+  ;;
+  --version)
+    echo Dwarf Fortress Server version $VERSION
+    exit 0
+  shift
+  ;;
+  --help)
+    f_help
+    exit 0
+  shift
+  ;;
+  *)
+    # Unknown
+  ;;
+esac
+done
+
+# Make sure Docker is installed, or there's nothign to do
+if ! command_exists docker ; then 
+    write_no "Checking for docker"
+  if ! command_exists lxc-docker ; then
+    write_no "Checking for lxc-docker"
+    f_err "Dwarf Fortress Server requires Docker to run."
+  fi
+else 
+  write_pass "Checking for docker"
+fi 
+
+if [[ $REBUILD ]] ; then
+  if [[ $LATEST ]] ; then
+    pull_latest
+  fi
+  rebuild_image
+fi
+
+if [[ -z $VOLMNT ]] ; then
+  echo 'Not setting up persistent save location'
+fi
+
+DFS=$(sudo docker run -p ${LOCAL_PORT}:6080 $VOLMNT -d ${IMAGENAME}:latest 2>&1) && \
+  write_pass "Starting Dwarf Fortress server" && exit 0
+
+# If we didn't Exit 0 above, then exit 1
+write_fail "Starting Dwarf Fortress server"
+f_err "$DFS"
