@@ -2,6 +2,7 @@
 
 VERSION="$(awk '/Version:/ {print $2",",$4}' README.md |sed 's/_//g')"
 DATETIME=$(date +"%s")
+
 COLWIDTH="$(tput cols)"
 RIGHTCOL="$((COLWIDTH -30))"
 
@@ -47,7 +48,7 @@ write_no () {
   printf "%${RIGHTCOL}s\n" "[NO]"
 }
 
-write_pass () {
+write_ok () {
   printf "$1"
   printf "%${RIGHTCOL}s\n" "[OK]"
 }
@@ -133,7 +134,7 @@ if ! command_exists docker ; then
     f_err "Dwarf Fortress Server requires Docker to run."
   fi
 else 
-  write_pass "Checking for docker"
+  write_ok "Checking for docker"
 fi 
 
 if [[ $REBUILD ]] ; then
@@ -148,7 +149,7 @@ if [[ -z $VOLMNT ]] ; then
 fi
 
 DFS=$(sudo docker run -p ${LOCAL_PORT}:6080 $VOLMNT -d ${IMAGENAME}:latest 2>&1) && \
-  write_pass "Starting Dwarf Fortress server" && exit 0
+  write_ok "Starting Dwarf Fortress server" && exit 0
 
 # If we didn't Exit 0 above, then exit 1
 write_fail "Starting Dwarf Fortress server"
