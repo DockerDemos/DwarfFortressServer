@@ -1,7 +1,7 @@
 DwarfFortress "Server"
 ======================
 
-_Version: 2.0 - 20150209_
+_Version: 2.1 - 20160824_
 
 Play [Dwarf Fortress](http://www.bay12games.com/dwarves/) in your browser with Docker and NoVNC!
 
@@ -13,7 +13,7 @@ Can you dig it?
 
 The `runme` script will manage both building the image and running the container:
 
-    $ ./runme.sh --help
+    $ ./runme --help
     Usage: ./runme [OPTIIONS]
     
     Dwarf Fortress in a Docker container
@@ -30,9 +30,9 @@ To Play Dwarf Fortress in your browser (requires HTML5 support), visit http://\<
 
 
 _Note:_ Check your browser's HTML5 Websocket support: [http://caniuse.com/#search=web%20sockets](http://caniuse.com/#search=web%20sockets)
-
+ 
 ### Known Issues ###
-
+ 
 Tracked on Github: [https://github.com/DockerDemos/DwarfFortressServer/issues](https://github.com/DockerDemos/DwarfFortressServer/issues)
 
 ### Acknowledgments ###
@@ -40,6 +40,7 @@ Tracked on Github: [https://github.com/DockerDemos/DwarfFortressServer/issues](h
 * Thanks to Toady and ThreeToe for making [Dwarf Fortress](http://www.bay12games.com/dwarves/) - best.game.evar!
 * Thanks to the [NoVNC team](https://kanaka.github.io/noVNC/).  VNC in a browser is absolutely amazing.
 * Thanks to [Paim Pozhil](https://github.com/paimpozhil) for helping me figure out NoVNC with his [Docker-NoVNC repo](https://github.com/paimpozhil/docker-novnc)!
+* Thanks to [Christoph Hermes](https://github.com/chermes) for [updating the Dockerfile to 64bit and DF 43_05](https://github.com/DockerDemos/DwarfFortressServer/pull/7)! 
 
 ### Copyright Info ###
 
