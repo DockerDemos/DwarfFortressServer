@@ -75,7 +75,7 @@ rebuild_image () {
     RMI=$(sudo docker rmi ${IMAGENAME}:latest 2>&1) || \
     f_err "Unable to remove ${IMAGENAME}:latest tag\n\n ${RMI}"
   fi
-    
+
   if [[ ! -z $CACHE ]] ; then
     echo 'Building image without Docker cache'
   fi
@@ -127,15 +127,15 @@ esac
 done
 
 # Make sure Docker is installed, or there's nothign to do
-if ! command_exists docker ; then 
+if ! command_exists docker ; then
     write_no "Checking for docker"
   if ! command_exists lxc-docker ; then
     write_no "Checking for lxc-docker"
     f_err "Dwarf Fortress Server requires Docker to run."
   fi
-else 
+else
   write_ok "Checking for docker"
-fi 
+fi
 
 if [[ $REBUILD ]] ; then
   if [[ $LATEST ]] ; then
