@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd /noVNC
-exec ./utils/launch.sh --vnc localhost:5900
+exec ./utils/novnc_proxy --vnc localhost:5900
